@@ -1,0 +1,146 @@
+{
+  "design_system": {
+    "identity": {
+      "name": "RMIE - Raw Material Intelligence Engine",
+      "metaphor": "The Digital Cockpit for Supply Chain",
+      "tone": "Precision, Enterprise, Futuristic, Data-Dense",
+      "theme_mode": "dark"
+    },
+    "typography": {
+      "font_family": {
+        "headings": "Chakra Petch, sans-serif",
+        "body": "Inter, sans-serif",
+        "data": "JetBrains Mono, monospace"
+      },
+      "scale": {
+        "h1": "text-4xl font-bold tracking-tight uppercase",
+        "h2": "text-2xl font-semibold tracking-wide",
+        "h3": "text-xl font-medium text-muted-foreground",
+        "data_large": "text-3xl font-mono font-bold tracking-tighter",
+        "data_small": "text-sm font-mono text-muted-foreground"
+      },
+      "import_url": "https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+    },
+    "colors": {
+      "palette": {
+        "background": {
+          "default": "#050505",
+          "paper": "#0A0A0A",
+          "glass": "rgba(15, 15, 15, 0.6)"
+        },
+        "border": {
+          "default": "rgba(255, 255, 255, 0.08)",
+          "active": "rgba(59, 130, 246, 0.5)"
+        },
+        "brand": {
+          "primary": "#3B82F6",
+          "secondary": "#10B981",
+          "accent": "#F59E0B"
+        },
+        "semantic": {
+          "success": "#10B981",
+          "warning": "#F59E0B",
+          "danger": "#EF4444",
+          "info": "#3B82F6"
+        },
+        "neon": {
+          "blue": "#00F0FF",
+          "green": "#39FF14",
+          "red": "#FF003C",
+          "amber": "#FFD700"
+        }
+      },
+      "gradients": {
+        "glass_surface": "linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%)",
+        "active_border": "linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.5), transparent)"
+      }
+    },
+    "layout": {
+      "grid_system": "Bento Grid (Grid-cols-12 with variable spans)",
+      "spacing": "Relaxed (2x standard Tailwind spacing)",
+      "container": "max-w-[1920px] mx-auto px-6"
+    },
+    "visual_enhancers": {
+      "glassmorphism": {
+        "backdrop_filter": "blur(12px)",
+        "border": "1px solid rgba(255,255,255,0.08)",
+        "shadow": "0 4px 30px rgba(0, 0, 0, 0.1)"
+      },
+      "borders": {
+        "radius": "rounded-none md:rounded-lg",
+        "style": "solid 1px"
+      },
+      "animations": {
+        "hover_lift": "transition-transform duration-300 hover:-translate-y-1",
+        "glow_pulse": "animate-pulse"
+      }
+    },
+    "assets": {
+      "images": {
+        "materials": {
+          "copper": "https://images.pexels.com/photos/5279317/pexels-photo-5279317.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+          "steel": "https://images.unsplash.com/photo-1721745250213-c3e1a2f4eeeb?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxOTB8MHwxfHNlYXJjaHwxfHxzaGlueSUyMHN0ZWVsJTIwc2hlZXQlMjByb2xsJTIwaW5kdXN0cmlhbHxlbnwwfHx8fDE3NzQwMDYzNjh8MA&ixlib=rb-4.1.0&q=85",
+          "aluminium": "https://images.unsplash.com/photo-1758873263614-cd6c5863d457?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzd8MHwxfHNlYXJjaHw0fHxpbmR1c3RyaWFsJTIwc3RlZWwlMjBjb2lscyUyMGNvcHBlciUyMHdpcmUlMjBhbHVtaW5pdW0lMjBpbmdvdHN8ZW58MHx8fHwxNzc0MDA2MzUyfDA&ixlib=rb-4.1.0&q=85",
+          "rubber": "https://images.pexels.com/photos/116676/pexels-photo-116676.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+          "electronics": "https://images.unsplash.com/photo-1587569087747-addba755bda6?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NDh8MHwxfHNlYXJjaHwxfHxjaXJjdWl0JTIwYm9hcmQlMjBibHVlJTIwbmVvbiUyMG1hY3JvfGVufDB8fHx8MTc3NDAwNjM3MHww&ixlib=rb-4.1.0&q=85"
+        },
+        "backgrounds": {
+          "factory_dark": "https://images.pexels.com/photos/36104699/pexels-photo-36104699.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+          "robot_arm": "https://images.unsplash.com/photo-1752614671144-7eee784abf74?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2OTF8MHwxfHNlYXJjaHwzfHxhdXRvbW90aXZlJTIwbWFudWZhY3R1cmluZyUyMHJvYm90JTIwYXJtJTIwY2FyJTIwY2hhc3NpcyUyMGZhY3Rvcnl8ZW58MHx8fHwxNzc0MDA2MzUzfDA&ixlib=rb-4.1.0&q=85"
+        },
+        "avatars": {
+          "user_default": "https://github.com/shadcn.png"
+        }
+      },
+      "icons": {
+        "library": "lucide-react",
+        "style": "stroke-[1.5px]"
+      }
+    }
+  },
+  "component_guidelines": {
+    "cards": {
+      "base_class": "bg-neutral-900/50 backdrop-blur-md border border-white/10 rounded-xl overflow-hidden relative group hover:border-blue-500/30 transition-colors duration-300",
+      "glass_variant": "bg-white/5 backdrop-blur-xl border border-white/10 shadow-2xl"
+    },
+    "buttons": {
+      "primary": "bg-blue-600 hover:bg-blue-500 text-white font-medium rounded-lg px-6 py-2 transition-all shadow-[0_0_15px_rgba(59,130,246,0.5)] hover:shadow-[0_0_25px_rgba(59,130,246,0.7)]",
+      "secondary": "bg-white/10 hover:bg-white/20 text-white border border-white/10 rounded-lg px-6 py-2 backdrop-blur-md",
+      "ghost": "hover:bg-white/5 text-gray-400 hover:text-white transition-colors"
+    },
+    "charts": {
+      "library": "recharts",
+      "theme": {
+        "grid": "stroke-gray-800 stroke-[1px] stroke-dasharray-3-3",
+        "tooltip": "bg-black/80 border-gray-700 text-white backdrop-blur-md rounded-lg p-3 shadow-xl"
+      }
+    },
+    "inputs": {
+      "base": "bg-black/20 border-white/10 focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 rounded-lg text-white placeholder:text-gray-600 backdrop-blur-sm"
+    }
+  },
+  "pages": {
+    "dashboard": {
+      "layout": "ControlTowerGrid",
+      "sections": [
+        "TickerTape (Top)",
+        "GlobalMap (Center/Hero)",
+        "KeyMetrics (Left Sidebar)",
+        "AlertsFeed (Right Sidebar)",
+        "CommodityCards (Bottom Row)"
+      ]
+    }
+  },
+  "instructions_to_main_agent": [
+    "1. THEME ENFORCEMENT: Force 'dark' class on the root html element. Do not implement a light mode toggle. This is a pro tool.",
+    "2. FONT INSTALLATION: Import 'Chakra Petch' and 'JetBrains Mono' in index.css immediately.",
+    "3. GLASSMORPHISM: Use 'backdrop-blur-md' and 'bg-opacity' heavily. Never use solid opaque backgrounds for containers.",
+    "4. DATA DENSITY: Don't waste space. Use compact tables and grids. This is for power users.",
+    "5. MOTION: Add 'framer-motion' for subtle entry animations on all cards (staggerChildren).",
+    "6. MAPS: Use a dark-themed map (or abstract SVG map) for the Trade Flows. Do not use default Google Maps colors.",
+    "7. CHARTS: Use 'recharts'. Style the lines to be thin (strokeWidth={2}) and use dot={false} for a cleaner look.",
+    "8. AI CHAT: The AI interface should look like a terminal or HUD. Use monospace fonts for the AI responses.",
+    "9. SIDEBAR: Make the sidebar collapsible to maximize screen real estate for data.",
+    "10. TESTING: Add data-testid to all interactive elements (buttons, inputs, cards)."
+  ]
+}
