@@ -156,16 +156,125 @@ def convert_currency(amount: float, from_currency: str, to_currency: str) -> flo
 
 # Material definitions with realistic base prices
 MATERIALS = {
-    "steel_hr": {"name": "Hot Rolled Steel", "category": "Ferrous Metals", "base_price": 680, "unit": "MT", "volatility": 0.02},
-    "steel_cr": {"name": "Cold Rolled Steel", "category": "Ferrous Metals", "base_price": 850, "unit": "MT", "volatility": 0.025},
-    "aluminium": {"name": "Aluminium", "category": "Non-Ferrous Metals", "base_price": 2450, "unit": "MT", "volatility": 0.03},
-    "copper": {"name": "Copper", "category": "Non-Ferrous Metals", "base_price": 8500, "unit": "MT", "volatility": 0.035},
-    "rubber_nr": {"name": "Natural Rubber", "category": "Polymers", "base_price": 1650, "unit": "MT", "volatility": 0.04},
-    "rubber_sr": {"name": "Synthetic Rubber", "category": "Polymers", "base_price": 1820, "unit": "MT", "volatility": 0.03},
-    "abs_plastic": {"name": "ABS Plastic", "category": "Polymers", "base_price": 1950, "unit": "MT", "volatility": 0.025},
-    "pp_plastic": {"name": "Polypropylene", "category": "Polymers", "base_price": 1150, "unit": "MT", "volatility": 0.02},
+    "steel_hr": {"name": "Hot Rolled Steel", "category": "Metals", "base_price": 680, "unit": "MT", "volatility": 0.02},
+    "steel_cr": {"name": "Cold Rolled Steel", "category": "Metals", "base_price": 850, "unit": "MT", "volatility": 0.025},
+    "aluminium": {"name": "Aluminium", "category": "Metals", "base_price": 2450, "unit": "MT", "volatility": 0.03},
+    "copper": {"name": "Copper", "category": "Metals", "base_price": 8500, "unit": "MT", "volatility": 0.035},
+    "rubber_nr": {"name": "Natural Rubber", "category": "Polymers & Rubber", "base_price": 1650, "unit": "MT", "volatility": 0.04},
+    "rubber_sr": {"name": "Synthetic Rubber", "category": "Polymers & Rubber", "base_price": 1820, "unit": "MT", "volatility": 0.03},
+    "abs_plastic": {"name": "ABS Plastic", "category": "Polymers & Rubber", "base_price": 1950, "unit": "MT", "volatility": 0.025},
+    "pp_plastic": {"name": "Polypropylene", "category": "Polymers & Rubber", "base_price": 1150, "unit": "MT", "volatility": 0.02},
     "pcb": {"name": "PCB Components", "category": "Electronics", "base_price": 45, "unit": "unit", "volatility": 0.015},
     "semiconductors": {"name": "Semiconductors", "category": "Electronics", "base_price": 12.50, "unit": "unit", "volatility": 0.05},
+}
+
+# Grade definitions for each material
+MATERIAL_GRADES = {
+    "steel_hr": {
+        "name": "Hot Rolled Steel",
+        "grades": [
+            {"id": "astm_a36", "name": "ASTM A36", "description": "Structural steel", "price_modifier": 1.0},
+            {"id": "sae_1018", "name": "SAE 1018", "description": "Low carbon steel", "price_modifier": 1.05},
+            {"id": "sae_1020", "name": "SAE 1020", "description": "Low carbon steel", "price_modifier": 1.03},
+            {"id": "is_2062_e250", "name": "IS 2062 E250", "description": "Indian standard structural", "price_modifier": 0.98},
+            {"id": "is_2062_e350", "name": "IS 2062 E350", "description": "Indian standard high strength", "price_modifier": 1.08},
+            {"id": "s235", "name": "S235 (EN)", "description": "European structural steel", "price_modifier": 1.02},
+            {"id": "s275", "name": "S275 (EN)", "description": "European structural steel", "price_modifier": 1.06},
+            {"id": "s355", "name": "S355 (EN)", "description": "European high strength", "price_modifier": 1.12},
+        ]
+    },
+    "steel_cr": {
+        "name": "Cold Rolled Steel",
+        "grades": [
+            {"id": "sae_1008", "name": "SAE 1008", "description": "Extra low carbon", "price_modifier": 1.0},
+            {"id": "sae_1010", "name": "SAE 1010", "description": "Low carbon", "price_modifier": 1.02},
+            {"id": "sae_1018_cr", "name": "SAE 1018", "description": "Low carbon cold rolled", "price_modifier": 1.05},
+            {"id": "dc01", "name": "DC01 (EN)", "description": "Drawing quality", "price_modifier": 1.08},
+            {"id": "dc03", "name": "DC03 (EN)", "description": "Deep drawing", "price_modifier": 1.12},
+            {"id": "dc04", "name": "DC04 (EN)", "description": "Extra deep drawing", "price_modifier": 1.18},
+            {"id": "is513_cr1", "name": "IS 513 CR1", "description": "Indian commercial quality", "price_modifier": 0.95},
+            {"id": "is513_cr2", "name": "IS 513 CR2", "description": "Indian drawing quality", "price_modifier": 1.0},
+            {"id": "is513_cr3", "name": "IS 513 CR3", "description": "Indian deep drawing", "price_modifier": 1.05},
+        ]
+    },
+    "aluminium": {
+        "name": "Aluminium",
+        "grades": [
+            {"id": "al_1100", "name": "1100", "description": "Commercial pure aluminium", "price_modifier": 0.95},
+            {"id": "al_3003", "name": "3003", "description": "General purpose alloy", "price_modifier": 1.0},
+            {"id": "al_5052", "name": "5052", "description": "Corrosion resistant", "price_modifier": 1.08},
+            {"id": "al_6061", "name": "6061", "description": "Structural alloy", "price_modifier": 1.15},
+            {"id": "al_7075", "name": "7075", "description": "High strength aerospace", "price_modifier": 1.45},
+        ]
+    },
+    "copper": {
+        "name": "Copper",
+        "grades": [
+            {"id": "c10100", "name": "C10100", "description": "Oxygen-free electronic", "price_modifier": 1.25},
+            {"id": "c11000", "name": "C11000", "description": "Electrolytic tough pitch", "price_modifier": 1.0},
+            {"id": "c12200", "name": "C12200", "description": "Phosphorus deoxidized", "price_modifier": 1.05},
+            {"id": "c26000", "name": "C26000", "description": "Cartridge brass", "price_modifier": 0.85},
+        ]
+    },
+    "rubber_nr": {
+        "name": "Natural Rubber",
+        "grades": [
+            {"id": "rss1", "name": "RSS1", "description": "Ribbed Smoked Sheet Grade 1", "price_modifier": 1.15},
+            {"id": "rss3", "name": "RSS3", "description": "Ribbed Smoked Sheet Grade 3", "price_modifier": 1.0},
+            {"id": "tsr10", "name": "TSR 10", "description": "Technically Specified Rubber 10", "price_modifier": 1.08},
+            {"id": "tsr20", "name": "TSR 20", "description": "Technically Specified Rubber 20", "price_modifier": 0.95},
+            {"id": "isnr5", "name": "ISNR 5", "description": "Indian Standard NR Grade 5", "price_modifier": 1.12},
+            {"id": "isnr10", "name": "ISNR 10", "description": "Indian Standard NR Grade 10", "price_modifier": 1.05},
+            {"id": "isnr20", "name": "ISNR 20", "description": "Indian Standard NR Grade 20", "price_modifier": 0.92},
+        ]
+    },
+    "rubber_sr": {
+        "name": "Synthetic Rubber",
+        "grades": [
+            {"id": "sbr_1502", "name": "SBR 1502", "description": "Styrene Butadiene Rubber", "price_modifier": 1.0},
+            {"id": "br", "name": "BR", "description": "Butadiene Rubber", "price_modifier": 1.08},
+            {"id": "nbr", "name": "NBR", "description": "Nitrile Rubber", "price_modifier": 1.25},
+            {"id": "epdm", "name": "EPDM", "description": "Ethylene Propylene Diene", "price_modifier": 1.35},
+            {"id": "cr_neoprene", "name": "CR (Neoprene)", "description": "Chloroprene Rubber", "price_modifier": 1.45},
+        ]
+    },
+    "abs_plastic": {
+        "name": "ABS Plastic",
+        "grades": [
+            {"id": "abs_gp", "name": "General Purpose ABS", "description": "Standard applications", "price_modifier": 1.0},
+            {"id": "abs_hi", "name": "High Impact ABS", "description": "Impact resistant", "price_modifier": 1.12},
+            {"id": "abs_fr", "name": "Flame Retardant ABS", "description": "Fire resistant", "price_modifier": 1.35},
+            {"id": "abs_medical", "name": "Medical Grade ABS", "description": "Healthcare applications", "price_modifier": 1.65},
+            {"id": "abs_injection", "name": "Injection Molding Grade", "description": "High flow", "price_modifier": 1.08},
+        ]
+    },
+    "pp_plastic": {
+        "name": "Polypropylene",
+        "grades": [
+            {"id": "pp_homo", "name": "Homopolymer (PP-H)", "description": "Standard PP", "price_modifier": 1.0},
+            {"id": "pp_copo", "name": "Copolymer (PP-C)", "description": "Block copolymer", "price_modifier": 1.08},
+            {"id": "pp_random", "name": "Random Copolymer", "description": "Clarity applications", "price_modifier": 1.12},
+            {"id": "pp_impact", "name": "Impact Copolymer", "description": "High impact", "price_modifier": 1.15},
+            {"id": "pp_fiber", "name": "Fiber Grade PP", "description": "Textile applications", "price_modifier": 1.05},
+        ]
+    },
+    "pcb": {
+        "name": "PCB Components",
+        "grades": [
+            {"id": "ipc_class1", "name": "IPC Class 1", "description": "Consumer electronics", "price_modifier": 0.85},
+            {"id": "ipc_class2", "name": "IPC Class 2", "description": "Industrial applications", "price_modifier": 1.0},
+            {"id": "ipc_class3", "name": "IPC Class 3", "description": "High reliability - Automotive, Aerospace", "price_modifier": 1.45},
+        ]
+    },
+    "semiconductors": {
+        "name": "Semiconductors",
+        "grades": [
+            {"id": "semi_commercial", "name": "Commercial Grade", "description": "0°C to 70°C range", "price_modifier": 1.0},
+            {"id": "semi_industrial", "name": "Industrial Grade", "description": "-40°C to 85°C range", "price_modifier": 1.25},
+            {"id": "semi_automotive", "name": "Automotive Grade (AEC-Q100)", "description": "Automotive qualified", "price_modifier": 1.65},
+            {"id": "semi_military", "name": "Military Grade", "description": "-55°C to 125°C range", "price_modifier": 2.5},
+        ]
+    },
 }
 
 # Automotive component mapping
@@ -235,6 +344,105 @@ def get_current_prices() -> List[MaterialPrice]:
             last_updated=datetime.now(timezone.utc).isoformat()
         ))
     return prices
+
+def get_grade_prices(material_id: str) -> List[Dict]:
+    """Generate current prices for all grades of a material"""
+    if material_id not in MATERIALS or material_id not in MATERIAL_GRADES:
+        return []
+    
+    mat_info = MATERIALS[material_id]
+    grade_info = MATERIAL_GRADES[material_id]
+    base = mat_info["base_price"]
+    vol = mat_info["volatility"]
+    
+    grades = []
+    for grade in grade_info["grades"]:
+        grade_base = base * grade["price_modifier"]
+        current = generate_price_with_trend(grade_base, vol, 0)
+        price_24h_ago = generate_price_with_trend(grade_base, vol, 1)
+        price_7d_ago = generate_price_with_trend(grade_base, vol, 7)
+        price_30d_ago = generate_price_with_trend(grade_base, vol, 30)
+        
+        grades.append({
+            "grade_id": grade["id"],
+            "material_id": material_id,
+            "name": grade["name"],
+            "description": grade["description"],
+            "current_price": round(current, 2),
+            "unit": mat_info["unit"],
+            "change_24h": round((current - price_24h_ago) / price_24h_ago * 100, 2),
+            "change_7d": round((current - price_7d_ago) / price_7d_ago * 100, 2),
+            "change_30d": round((current - price_30d_ago) / price_30d_ago * 100, 2),
+            "volume_24h": round(random.uniform(10000, 100000), 0),
+            "high_24h": round(current * 1.02, 2),
+            "low_24h": round(current * 0.98, 2),
+            "price_modifier": grade["price_modifier"],
+            "last_updated": datetime.now(timezone.utc).isoformat()
+        })
+    return grades
+
+def get_grade_price_history(material_id: str, grade_id: str, days: int = 30) -> List[PriceHistoryPoint]:
+    """Generate historical price data for a specific grade"""
+    if material_id not in MATERIALS or material_id not in MATERIAL_GRADES:
+        return []
+    
+    mat_info = MATERIALS[material_id]
+    grade_info = MATERIAL_GRADES[material_id]
+    
+    # Find the grade
+    grade = next((g for g in grade_info["grades"] if g["id"] == grade_id), None)
+    if not grade:
+        return []
+    
+    base = mat_info["base_price"] * grade["price_modifier"]
+    vol = mat_info["volatility"]
+    
+    history = []
+    for i in range(days, -1, -1):
+        dt = datetime.now(timezone.utc) - timedelta(days=i)
+        price = generate_price_with_trend(base, vol, i)
+        history.append(PriceHistoryPoint(
+            timestamp=dt.isoformat(),
+            price=round(price, 2),
+            volume=round(random.uniform(10000, 50000), 0)
+        ))
+    return history
+
+def get_grade_forecast(material_id: str, grade_id: str, days: int = 30) -> List[Forecast]:
+    """Generate price forecast for a specific grade"""
+    if material_id not in MATERIALS or material_id not in MATERIAL_GRADES:
+        return []
+    
+    mat_info = MATERIALS[material_id]
+    grade_info = MATERIAL_GRADES[material_id]
+    
+    # Find the grade
+    grade = next((g for g in grade_info["grades"] if g["id"] == grade_id), None)
+    if not grade:
+        return []
+    
+    base = mat_info["base_price"] * grade["price_modifier"]
+    vol = mat_info["volatility"]
+    
+    # Start from current price
+    current = generate_price_with_trend(base, vol, 0)
+    trend = random.choice([-1, 1]) * random.uniform(0.001, 0.003)
+    
+    forecasts = []
+    for i in range(1, days + 1):
+        dt = datetime.now(timezone.utc) + timedelta(days=i)
+        predicted = current * (1 + trend * i + random.gauss(0, vol * 0.3))
+        uncertainty = vol * math.sqrt(i) * current
+        confidence = max(0.6, 0.95 - i * 0.01)
+        
+        forecasts.append(Forecast(
+            date=dt.strftime("%Y-%m-%d"),
+            predicted_price=round(predicted, 2),
+            lower_bound=round(predicted - uncertainty, 2),
+            upper_bound=round(predicted + uncertainty, 2),
+            confidence=round(confidence, 2)
+        ))
+    return forecasts
 
 def get_price_history(material_id: str, days: int = 30) -> List[PriceHistoryPoint]:
     """Generate historical price data"""
@@ -536,6 +744,62 @@ async def get_material_forecast(material_id: str, days: int = Query(30, ge=1, le
     if not forecast:
         raise HTTPException(status_code=404, detail="Material not found")
     return {"material_id": material_id, "forecasts": forecast}
+
+# Grade endpoints
+@api_router.get("/materials/{material_id}/grades")
+async def get_material_grades(material_id: str, currency: str = "USD"):
+    """Get all grades for a material with current prices"""
+    if material_id not in MATERIAL_GRADES:
+        raise HTTPException(status_code=404, detail="Material not found")
+    
+    grades = get_grade_prices(material_id)
+    material_info = MATERIAL_GRADES[material_id]
+    
+    if currency.upper() != "USD":
+        rate = EXCHANGE_RATES.get(f"USD_{currency.upper()}", 1)
+        for g in grades:
+            g["current_price"] = round(g["current_price"] * rate, 2)
+            g["high_24h"] = round(g["high_24h"] * rate, 2)
+            g["low_24h"] = round(g["low_24h"] * rate, 2)
+    
+    return {
+        "material_id": material_id,
+        "material_name": material_info["name"],
+        "grades": grades,
+        "currency": currency.upper()
+    }
+
+@api_router.get("/materials/{material_id}/grades/{grade_id}")
+async def get_grade_detail(material_id: str, grade_id: str, currency: str = "USD"):
+    """Get details for a specific grade"""
+    grades = get_grade_prices(material_id)
+    grade = next((g for g in grades if g["grade_id"] == grade_id), None)
+    if not grade:
+        raise HTTPException(status_code=404, detail="Grade not found")
+    
+    if currency.upper() != "USD":
+        rate = EXCHANGE_RATES.get(f"USD_{currency.upper()}", 1)
+        grade["current_price"] = round(grade["current_price"] * rate, 2)
+        grade["high_24h"] = round(grade["high_24h"] * rate, 2)
+        grade["low_24h"] = round(grade["low_24h"] * rate, 2)
+    
+    return {"grade": grade, "currency": currency.upper()}
+
+@api_router.get("/materials/{material_id}/grades/{grade_id}/history")
+async def get_grade_history_endpoint(material_id: str, grade_id: str, days: int = Query(30, ge=1, le=365)):
+    """Get price history for a specific grade"""
+    history = get_grade_price_history(material_id, grade_id, days)
+    if not history:
+        raise HTTPException(status_code=404, detail="Grade not found")
+    return {"material_id": material_id, "grade_id": grade_id, "history": history}
+
+@api_router.get("/materials/{material_id}/grades/{grade_id}/forecast")
+async def get_grade_forecast_endpoint(material_id: str, grade_id: str, days: int = Query(30, ge=1, le=90)):
+    """Get price forecast for a specific grade"""
+    forecast = get_grade_forecast(material_id, grade_id, days)
+    if not forecast:
+        raise HTTPException(status_code=404, detail="Grade not found")
+    return {"material_id": material_id, "grade_id": grade_id, "forecasts": forecast}
 
 @api_router.get("/materials/categories")
 async def get_material_categories():
