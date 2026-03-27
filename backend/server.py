@@ -25,6 +25,7 @@ db = client[os.environ['DB_NAME']]
 LLM_KEY = os.environ.get('EMERGENT_LLM_KEY')
 LLM_PROVIDER = os.environ.get('LLM_PROVIDER', 'openai')
 LLM_MODEL = os.environ.get('LLM_MODEL', 'gpt-5.2')
+ALPHA_VANTAGE_KEY = os.environ.get('ALPHA_VANTAGE_API_KEY')
 
 # Create the main app
 app = FastAPI(title="RMIE - Raw Material Intelligence Engine")
@@ -869,8 +870,77 @@ async def get_recommendations():
 # News & Insights
 @api_router.get("/news")
 async def get_news():
-    """Get market news and insights"""
-    return {"news": generate_news()}
+    """Get market news and insights - returns mock data as fallback"""
+    return {"news": generate_news(), "source": "mock"}
+
+@api_router.get("/news/live")
+async def get_live_news():
+    """Get live news from Alpha Vantage API"""
+    if not ALPHA_VANTAGE_KEY:
+        return {"news": generate_news(), "source": "mock", "error": "API key not configured"}
+    
+    try:
+        import aiohttp
+        # Fetch commodity/materials related news
+        topics = "manufacturing,technology,energy_transportation"
+        url = f"https://www.alphavantage.co/query?function=NEWS_SENTIMENT&topics={topics}&apikey={ALPHA_VANTAGE_KEY}&limit=20"
+        
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url, timeout=10) as response:
+                if response.status == 200:
+                    data = await response.json()
+                    
+                    if "feed" in data:
+                        news_items = []
+                        for item in data["feed"][:15]:
+                            # Map sentiment to our format
+                            sentiment_score = float(item.get("overall_sentiment_score", 0))
+                            if sentiment_score > 0.15:
+                                sentiment = "bullish"
+                            elif sentiment_score < -0.15:
+                                sentiment = "bearish"
+                            else:
+                                sentiment = "neutral"
+                            
+                            # Determine impact based on relevance
+                            relevance = float(item.get("relevance_score", "0.5") or 0.5)
+                            if relevance > 0.7:
+                                impact = "high"
+                            elif relevance > 0.4:
+                                impact = "medium"
+                            else:
+                                impact = "low"
+                            
+                            # Extract ticker relevance for materials mapping
+                            affected_materials = []
+                            ticker_sentiment = item.get("ticker_sentiment", [])
+                            for ticker in ticker_sentiment[:3]:
+                                affected_materials.append(ticker.get("ticker", ""))
+                            
+                            news_items.append({
+                                "id": item.get("url", "")[:50],
+                                "title": item.get("title", ""),
+                                "summary": item.get("summary", "")[:300] + "..." if len(item.get("summary", "")) > 300 else item.get("summary", ""),
+                                "url": item.get("url", ""),
+                                "source": item.get("source", ""),
+                                "timestamp": item.get("time_published", ""),
+                                "sentiment": sentiment,
+                                "sentiment_score": round(sentiment_score, 3),
+                                "impact": impact,
+                                "affected_materials": affected_materials if affected_materials else ["general"],
+                                "banner_image": item.get("banner_image", ""),
+                                "topics": [t.get("topic", "") for t in item.get("topics", [])][:3]
+                            })
+                        
+                        return {"news": news_items, "source": "alpha_vantage", "count": len(news_items)}
+                    else:
+                        # API limit reached or error
+                        return {"news": generate_news(), "source": "mock", "note": "API limit reached, showing mock data"}
+                else:
+                    return {"news": generate_news(), "source": "mock", "error": f"API returned {response.status}"}
+    except Exception as e:
+        logger.error(f"Error fetching live news: {e}")
+        return {"news": generate_news(), "source": "mock", "error": str(e)}
 
 # Cost Drivers
 @api_router.get("/analysis/cost-drivers")
